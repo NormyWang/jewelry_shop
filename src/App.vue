@@ -22,21 +22,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
   computed: {
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters('user', ['isAuthenticated']),
     currentYear() {
       return new Date().getFullYear();
     },
   },
   methods: {
+    ...mapMutations('user', ['setUser']),
     logout() {
-      // Perform logout logic, e.g., clear user data from Vuex store
-      this.$store.commit('setUser', null);
-      // Redirect to login page or home page
+      this.setUser(null);
       this.$router.push('/login');
     },
   },

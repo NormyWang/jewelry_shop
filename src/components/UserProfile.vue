@@ -11,15 +11,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters('user', ['user']),
+  },
+  methods: {
+    ...mapActions('user', ['fetchUser']),
   },
   created() {
     if (this.user) {
-      this.$store.dispatch('fetchUser', this.user.username);
+      this.fetchUser(this.user.username);
     }
   },
 };

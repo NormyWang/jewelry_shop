@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'RegisterForm',
   data() {
@@ -23,6 +25,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions('user', ['registerUser']),
     async register() {
       const userData = {
         username: this.username,
@@ -30,7 +33,7 @@ export default {
         email: this.email,
         address: this.address,
       };
-      await this.$store.dispatch('registerUser', userData);
+      await this.registerUser(userData);
       this.$router.push('/login');
     },
   },

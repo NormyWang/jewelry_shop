@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import http from '../http-common';
 
 export default {
@@ -28,6 +29,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions('order', ['fetchOrders']),
     async submitOrder() {
       const orderData = {
         username: this.username,
@@ -37,10 +39,11 @@ export default {
       try {
         const response = await http.post('/orders', orderData);
         console.log(response.data.message);
-        // Clear form fields after successful submission
         this.username = '';
         this.productIds = '';
         this.quantities = '';
+        // Fetch updated orders after submitting a new one
+        this.fetchOrders();
       } catch (error) {
         console.error('Error submitting order:', error);
       }

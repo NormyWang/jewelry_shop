@@ -12,19 +12,20 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   computed: {
-    products() {
-      return this.$store.getters.products;
-    },
+    ...mapGetters('product', ['products']),
   },
   methods: {
+    ...mapActions('product', ['fetchProducts']),
     getImageUrl(relativeUrl) {
-      return `http://normyartistry.com:90/${relativeUrl}`;
+      return `http://normyartistry.com:90/${relativeUrl.replace(/^\//, '')}`;
     },
   },
   created() {
-    this.$store.dispatch('fetchProducts');
+    this.fetchProducts();
   },
 };
 </script>

@@ -10,23 +10,26 @@
   </template>
   
   <script>
-  export default {
-    name: 'LoginForm',
-    data() {
-      return {
-        username: '',
-        password: '',
+import { mapActions } from 'vuex';
+
+export default {
+  name: 'LoginForm',
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    ...mapActions('user', ['loginUser']),
+    async login() {
+      const credentials = {
+        username: this.username,
+        password: this.password,
       };
+      await this.loginUser(credentials);
+      this.$router.push('/');
     },
-    methods: {
-      async login() {
-        const credentials = {
-          username: this.username,
-          password: this.password,
-        };
-        await this.$store.dispatch('loginUser', credentials);
-        this.$router.push('/');
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
