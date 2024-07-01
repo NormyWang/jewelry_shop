@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   computed: {
-    ...mapGetters(['products']),
+    products() {
+      return this.$store.getters.products;
+    },
   },
   methods: {
     getImageUrl(relativeUrl) {
